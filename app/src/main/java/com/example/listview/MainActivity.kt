@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
@@ -26,9 +27,12 @@ class MainActivity : AppCompatActivity() {
     private class MyCustomAdapter(context: Context): BaseAdapter() {
 
         private val mContext: Context = context
+        private val names = arrayListOf<String>(
+            "세종대왕", "흥선대원군", "정조"
+        )
 
         override fun getCount(): Int {
-            return 5
+            return names.size
         }
 
         override fun getItemId(position: Int): Long {
@@ -40,11 +44,24 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun getView(position: Int, convertView: View?, viewGroup: ViewGroup?): View {
-            val textView = TextView(mContext)
-            textView.text = "my LISTVIEW ROW"
 
-            return textView
+            val layoutInflater = LayoutInflater.from(mContext)
+            val rowMain = layoutInflater.inflate(R.layout.row_main, viewGroup, false)
+
+            val nameTextView = rowMain.findViewById<TextView>(R.id.name_textView)
+            nameTextView.text = names.get(position)
+
+            val positionTextView = rowMain.findViewById<TextView>(R.id.position_textView)
+            positionTextView.text = "Row Number: $position"
+
+            return rowMain
+
         }
+//            val textView = TextView(mContext)
+//            textView.text = "my LISTVIEW ROW"
+//
+//            return textView
+//        }
     }
 }
 
